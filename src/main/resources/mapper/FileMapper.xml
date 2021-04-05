@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.eduplatform.cep.mapper.FileMapper">
+  <resultMap id="BaseResultMap" type="xyz.eduplatform.cep.pojo.File">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="fileName" jdbcType="VARCHAR" property="filename" />
+    <result column="fileFullName" jdbcType="VARCHAR" property="filefullname" />
+    <result column="fileOriginalName" jdbcType="VARCHAR" property="fileoriginalname" />
+    <result column="fileSize" jdbcType="INTEGER" property="filesize" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="last_modified_by" jdbcType="VARCHAR" property="lastModifiedBy" />
+    <result column="last_modified_date" jdbcType="TIMESTAMP" property="lastModifiedDate" />
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, fileName, fileFullName, fileOriginalName, fileSize, created_by, created_date, 
+    last_modified_by, last_modified_date, is_del
+  </sql>
+  <select id="selectByExample" parameterType="xyz.eduplatform.cep.pojo.FileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="xyz.eduplatform.cep.pojo.FileExample">
+    delete from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="xyz.eduplatform.cep.pojo.File">
+    insert into file (id, fileName, fileFullName, 
+      fileOriginalName, fileSize, created_by, 
+      created_date, last_modified_by, last_modified_date, 
+      is_del)
+    values (#{id,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filefullname,jdbcType=VARCHAR}, 
+      #{fileoriginalname,jdbcType=VARCHAR}, #{filesize,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}, #{lastModifiedDate,jdbcType=TIMESTAMP}, 
+      #{isDel,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.eduplatform.cep.pojo.File">
+    insert into file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="filename != null">
+        fileName,
+      </if>
+      <if test="filefullname != null">
+        fileFullName,
+      </if>
+      <if test="fileoriginalname != null">
+        fileOriginalName,
+      </if>
+      <if test="filesize != null">
+        fileSize,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="lastModifiedBy != null">
+        last_modified_by,
+      </if>
+      <if test="lastModifiedDate != null">
+        last_modified_date,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filefullname != null">
+        #{filefullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fileoriginalname != null">
+        #{fileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null">
+        #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null">
+        #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null">
+        #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="xyz.eduplatform.cep.pojo.FileExample" resultType="java.lang.Long">
+    select count(*) from file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update file
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null">
+        fileName = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filefullname != null">
+        fileFullName = #{record.filefullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileoriginalname != null">
+        fileOriginalName = #{record.fileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filesize != null">
+        fileSize = #{record.filesize,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdBy != null">
+        created_by = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastModifiedBy != null">
+        last_modified_by = #{record.lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastModifiedDate != null">
+        last_modified_date = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update file
+    set id = #{record.id,jdbcType=VARCHAR},
+      fileName = #{record.filename,jdbcType=VARCHAR},
+      fileFullName = #{record.filefullname,jdbcType=VARCHAR},
+      fileOriginalName = #{record.fileoriginalname,jdbcType=VARCHAR},
+      fileSize = #{record.filesize,jdbcType=INTEGER},
+      created_by = #{record.createdBy,jdbcType=VARCHAR},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      last_modified_by = #{record.lastModifiedBy,jdbcType=VARCHAR},
+      last_modified_date = #{record.lastModifiedDate,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.eduplatform.cep.pojo.File">
+    update file
+    <set>
+      <if test="filename != null">
+        fileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filefullname != null">
+        fileFullName = #{filefullname,jdbcType=VARCHAR},
+      </if>
+      <if test="fileoriginalname != null">
+        fileOriginalName = #{fileoriginalname,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null">
+        fileSize = #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifiedBy != null">
+        last_modified_by = #{lastModifiedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifiedDate != null">
+        last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.eduplatform.cep.pojo.File">
+    update file
+    set fileName = #{filename,jdbcType=VARCHAR},
+      fileFullName = #{filefullname,jdbcType=VARCHAR},
+      fileOriginalName = #{fileoriginalname,jdbcType=VARCHAR},
+      fileSize = #{filesize,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      last_modified_by = #{lastModifiedBy,jdbcType=VARCHAR},
+      last_modified_date = #{lastModifiedDate,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
