@@ -25,6 +25,12 @@ public class FileController {
         fileService.upload(file);
         return ResultVO.success();
     };
+    @PostMapping(value = "/file/uploadBatch")
+    public ResultVO uploadBatch(MultipartFile[] files){
+        System.out.println(files);
+//        files.forEach(file->fileService.upload(file));
+        return ResultVO.success();
+    };
     @GetMapping("/file/preview/{fileName}")
     public ResultVO preview(@PathVariable @NotNull String fileName, HttpServletResponse response){
         log.info(String.format("预览的文件是%s",fileName));
