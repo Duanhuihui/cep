@@ -63,7 +63,7 @@ public class FileServiceImpl {
             case ".txt":
                 previewFile(fileLocation.getTxt()+fileName,response);break;
             default:
-                previewFile(fileLocation.getTxt()+fileName,response);break;
+                previewFile(fileLocation.getOther()+fileName,response);break;
         }
     }
 

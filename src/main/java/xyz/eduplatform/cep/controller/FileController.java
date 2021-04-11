@@ -21,20 +21,23 @@ public class FileController {
     public FileServiceImpl fileService;
 
     @PostMapping(value = "/file/upload")
-    public ResultVO upload(@RequestParam("file") MultipartFile file){
+    public ResultVO upload(@RequestParam(value = "file") MultipartFile file){
+        log.info("file",file);
         fileService.upload(file);
         return ResultVO.success();
     };
     @PostMapping(value = "/file/uploadBatch")
-    public ResultVO uploadBatch(MultipartFile[] files){
+    public ResultVO uploadBatch(@RequestParam(value = "files") MultipartFile[] files){
         System.out.println(files);
-//        files.forEach(file->fileService.upload(file));
+//        for(MultipartFile file:files){
+//            fileService.upload(file);
+//        };
         return ResultVO.success();
     };
     @GetMapping("/file/preview/{fileName}")
     public ResultVO preview(@PathVariable @NotNull String fileName, HttpServletResponse response){
         log.info(String.format("预览的文件是%s",fileName));
-        if(!fileName.contains(".")){
+        if(!fileName.contains(".") && fileName == null){
             log.info(String.format("预览的文件%s缺失后缀名",fileName));
             return ResultVO.error();
         }
